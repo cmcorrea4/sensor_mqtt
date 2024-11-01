@@ -21,12 +21,23 @@ def get_mqtt_message():
     
     def on_message(client, userdata, message):
         try:
-            # Decodificar el mensaje JSON
-            payload = json.loads(message.payload.decode())
-            # Agregar timestamp
-            payload['timestamp'] = datetime.now().strftime('%H:%M:%S')
-            message_received["payload"] = payload
+            # Decodificar el mensaje JSON con el formato específico
+            raw_payload = message.payload.decode()
+            payload = json.loads(raw_payload)
+            
+            # Crear diccionario con los datos formateados
+            formatted_data = {
+                'temperatura': payload.get('Temp', 'N/A'),
+                'humedad': payload.get('Hum', 'N/A'),
+                'timestamp': datetime.now().strftime('%H:%M:%S'),
+                'raw_data': raw_payload  # Guardamos el payload original para debugging
+            }
+            
+            message_received["payload"] = formatted_data
             message_received["received"] = True
+            
+        except json.JSONDecodeError as e:
+            st.error(f"Error decodificando JSON: {e}\nPayload recibido: {message.payload}")
         except Exception as e:
             st.error(f"Error procesando mensaje: {e}")
     
@@ -65,10 +76,26 @@ if st.button("Obtener Lectura"):
         
         if data:
             st.success("✅ Mensaje recibido")
-            st.metric(
-                label="Valor del Sensor",
-                value=f"{data.get('value', 'N/A')} {data.get('unit', '')}"
-            )
-            st.text(f"Timestamp: {data.get('timestamp', 'N/A')}")
+            
+            # Crear dos columnas para mostrar temperatura y humedad
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.metric(
+                    label="Temperatura",
+                    value=f"{data['temperatura']}°C" if data['temperatura'] != 'N/A' else 'N/A'
+                )
+            
+            with col2:
+                st.metric(
+                    label="Humedad",
+                    value=f"{data['humedad']}%" if data['humedad'] != 'N/A' else 'N/A'
+                )
+            
+            st.text(f"Timestamp: {data['timestamp']}")
+            
+            # Mostrar datos raw para debugging
+            with st.expander("Ver datos raw"):
+                st.code(data['raw_data'])
         else:
             st.warning("No se recibió ningún mensaje en los últimos 5 segundos")
