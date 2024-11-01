@@ -99,10 +99,8 @@ if st.button("Obtener Lectura"):
                     value=f"{data['humedad']}%" if data['humedad'] != 'N/A' else 'N/A'
                 )
             
-            st.text(f"Timestamp: {data['timestamp']} (Hora Bogotá)")
+            st.text(f"Fecha y Hora: {data['timestamp']} (Hora Bogotá)")
             
-            # Mostrar datos raw para debugging
-            with st.expander("Ver datos raw"):
-                st.code(data['raw_data'])
+
         else:
             st.warning("No se recibió ningún mensaje en los últimos 5 segundos")
