@@ -14,9 +14,9 @@ if 'last_data' not in st.session_state:
     st.session_state.last_data = None
 
 # Configuración MQTT
-MQTT_BROKER = "localhost"  # Cambia esto según tu broker
+MQTT_BROKER = "broker.mqttdashboard.com"  # Cambia esto según tu broker
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensor/data"  # Cambia esto según tu tópico
+MQTT_TOPIC = "sensor_st"  # Cambia esto según tu tópico
 
 # Callback cuando se recibe un mensaje
 def on_message(client, userdata, message):
