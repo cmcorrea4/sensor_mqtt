@@ -3,17 +3,21 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
 import time
+import pytz
 
 # Configuración de la página
 st.set_page_config(
-    page_title="Monitor de Sensor MQTT",
+    page_title="Monitor de Sensor",
     page_icon="📊"
 )
 
 # Configuración MQTT
-MQTT_BROKER = "broker.mqttdashboard.com"  # Cambia esto según tu broker
+MQTT_BROKER = "localhost"  # Cambia esto según tu broker
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensor_st"  # Cambia esto según tu tópico
+MQTT_TOPIC = "sensor/data"  # Cambia esto según tu tópico
+
+# Configuración de zona horaria
+bogota_tz = pytz.timezone('America/Bogota')
 
 def get_mqtt_message():
     """Función para obtener un único mensaje MQTT"""
@@ -25,11 +29,14 @@ def get_mqtt_message():
             raw_payload = message.payload.decode()
             payload = json.loads(raw_payload)
             
+            # Obtener hora actual en Bogotá
+            bogota_time = datetime.now(bogota_tz).strftime('%H:%M:%S')
+            
             # Crear diccionario con los datos formateados
             formatted_data = {
                 'temperatura': payload.get('Temp', 'N/A'),
                 'humedad': payload.get('Hum', 'N/A'),
-                'timestamp': datetime.now().strftime('%H:%M:%S'),
+                'timestamp': bogota_time,
                 'raw_data': raw_payload  # Guardamos el payload original para debugging
             }
             
@@ -92,7 +99,7 @@ if st.button("Obtener Lectura"):
                     value=f"{data['humedad']}%" if data['humedad'] != 'N/A' else 'N/A'
                 )
             
-            st.text(f"Timestamp: {data['timestamp']}")
+            st.text(f"Timestamp: {data['timestamp']} (Hora Bogotá)")
             
             # Mostrar datos raw para debugging
             with st.expander("Ver datos raw"):
