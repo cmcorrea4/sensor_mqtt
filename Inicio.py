@@ -4,7 +4,7 @@ import json
 import time
 from datetime import datetime
 import pandas as pd
-import plotly.graph_objects as go
+#import plotly.graph_objects as go
 
 # Configuración de la página
 st.set_page_config(
