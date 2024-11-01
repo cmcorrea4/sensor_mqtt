@@ -20,7 +20,7 @@ if 'last_update' not in st.session_state:
     st.session_state.last_update = None
 
 # Configuración MQTT
-MQTT_BROKER = "localhost"  # Cambia esto según tu broker
+MQTT_BROKER = "broker.mqttdashboard.com"  # Cambia esto según tu broker
 MQTT_PORT = 1883
 MQTT_TOPIC = "sensor/data"  # Cambia esto según tu tópico
 
