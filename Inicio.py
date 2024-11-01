@@ -101,6 +101,6 @@ if st.button("Obtener Lectura"):
             
             st.text(f"Fecha y Hora: {data['timestamp']} (Hora Bogotá)")
             
-
+st.link_button("Control por voz", "https://ctrlvce.streamlit.app/")
         else:
             st.warning("No se recibió ningún mensaje en los últimos 5 segundos")
