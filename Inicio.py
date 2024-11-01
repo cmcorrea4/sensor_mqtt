@@ -78,7 +78,7 @@ st.title("📊 Monitor de Sensor")
 
 # Botón de actualización
 if st.button("Obtener Lectura"):
-    with st.spinner('Escuchando el tópico MQTT...'):
+    with st.spinner('Obteniendo datos del Sensor...'):
         data = get_mqtt_message()
         
         if data:
