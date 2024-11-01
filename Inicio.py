@@ -13,7 +13,7 @@ st.set_page_config(
 # Configuración MQTT
 MQTT_BROKER = "broker.mqttdashboard.com"  # Cambia esto según tu broker
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensor/data"  # Cambia esto según tu tópico
+MQTT_TOPIC = "sensor_st"  # Cambia esto según tu tópico
 
 def get_mqtt_message():
     """Función para obtener un único mensaje MQTT"""
