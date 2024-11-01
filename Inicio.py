@@ -12,9 +12,9 @@ st.set_page_config(
 )
 
 # Configuración MQTT
-MQTT_BROKER = "localhost"  # Cambia esto según tu broker
+MQTT_BROKER = "broker.mqttdashboard.com"  # Cambia esto según tu broker
 MQTT_PORT = 1883
-MQTT_TOPIC = "sensor/data"  # Cambia esto según tu tópico
+MQTT_TOPIC = "sensor_st"  # Cambia esto según tu tópico
 
 # Configuración de zona horaria
 bogota_tz = pytz.timezone('America/Bogota')
